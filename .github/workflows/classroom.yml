@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.12"
 
       - name: Namesti potrebne knjižnice
         run: |
@@ -27,6 +27,16 @@ jobs:
         run: |
           jupyter nbconvert --to python notebook.ipynb --output=code.py
 
-      - name: Zazeni teste
+      - name: Prenesi skrite teste
         run: |
-          pytest tests.py
+          curl -o tests.py https://raw.githubusercontent.com/AlexCork1/N1TemplateTests/main/tests.py
+
+      - name: Zazeni vse teste
+        run: |
+          pytest tests.py --disable-warnings -v
+
+      - name: Nalozi rezultate (grade_summary.json)
+        uses: actions/upload-artifact@v4
+        with:
+          name: grade-summary
+          path: grade_summary.json
