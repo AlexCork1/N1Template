@@ -25,7 +25,7 @@ jobs:
 
       - name: Pretvori notebook v Python datoteko
         run: |
-          jupyter nbconvert --to python notebook.ipynb --output=code.py
+          jupyter nbconvert --to python notebook.ipynb --output=student_code.py
 
       - name: Prenesi skrite teste
         run: |
