@@ -1,0 +1,32 @@
+name: Ocenjevanje naloge
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Ocenjevanje-naloge:
+    name: Ocenjevanje naloge
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Namesti potrebne knjižnice
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Pretvori notebook v Python datoteko
+        run: |
+          jupyter nbconvert --to python notebook.ipynb --output=code.py
+
+      - name: Zazeni teste
+        run: |
+          pytest tests.py
